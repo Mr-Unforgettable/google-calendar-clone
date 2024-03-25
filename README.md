@@ -1,7 +1,8 @@
 ## React Calendar: Google Calendar Clone
 This project is a clone of Google Calendar with simplified functionality. It has been implemented with some third-party frameworks & libraries like (Tailwind, DayJS), and features custom UI components.
 
-![Project-SS](https://github.com/Mr-Unforgettable/google-calender-react/assets/48011922/51987452-3517-44f6-84b1-6b591d6a5bcd)
+![Project-SS](https://github.com/Mr-Unforgettable/google-calendar-react/assets/48011922/8e318adf-0409-461c-a957-b7d57e609eb2)
+
 
 ## Features
 * Month View: The calendar displays the current month by default. Users can navigate to other months using intuitive controls.
