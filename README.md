@@ -9,6 +9,7 @@ This project is a clone of Google Calendar with simplified functionality. It has
 * Week View: Upon entering the site, users are presented with the week of the current day. They can create events by clicking on the desired time slot.
 * Date Selection: Users can easily select specific dates in the smaller calendar.
 * Event CRUD: Users can manage their events. [NEW]
+* Labels: Added labels to organize your events. [NEW]
 * Responsive Design: The calendar is fully adaptive and works seamlessly across different screen sizes.
 
 ## Tech Stack
