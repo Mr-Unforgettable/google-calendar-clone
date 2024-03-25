@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import GlobalContext from "./GlobalContext";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 
 function savedEventsReducer(state, { type, payload }) {
   switch (type) {
@@ -27,12 +27,22 @@ export default function ContextWrapper(props) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
   const [smallCalenderMonth, setSmallCalenderMonth] = useState(null);
+  const [labels, setLabels] = useState([]);
 
   const [savedEvents, dispatchCalledEvent] = useReducer(
     savedEventsReducer,
     [],
     initEvents
   );
+
+  const filteredEvents = useMemo(() => {
+    return savedEvents.filter((event) =>
+      labels
+        .filter((lbl) => lbl.checked)
+        .map((lbl) => lbl.label)
+        .includes(event.label)
+    );
+  }, [savedEvents, labels]);
 
   useEffect(() => {
     localStorage.setItem("saveEvents", JSON.stringify(savedEvents));
@@ -43,6 +53,24 @@ export default function ContextWrapper(props) {
       setMonthIndex(smallCalenderMonth);
     }
   }, [smallCalenderMonth]);
+
+  useEffect(() => {
+    setLabels((prevLabels) => {
+      return [...new Set(savedEvents.map((event) => event.label))].map(
+        (label) => {
+          const currentLabel = prevLabels.find((lbl) => lbl.label === label);
+          return {
+            label,
+            checked: currentLabel ? currentLabel.checked : true,
+          };
+        }
+      );
+    });
+  }, [savedEvents]);
+
+  function updateLabel(label) {
+    setLabels(labels.map((lbl) => (lbl.label === label.label ? label : lbl)));
+  }
 
   useEffect(() => {
     if (!showEventModal) {
@@ -65,6 +93,10 @@ export default function ContextWrapper(props) {
         savedEvents,
         selectedEvent,
         setSelectedEvent,
+        setLabels,
+        labels,
+        updateLabel,
+        filteredEvents
       }}
     >
       {props.children}
